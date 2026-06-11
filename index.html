@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="theme-color" content="#00B14F">
+  <title>GrubFood — Food Delivery (Demo)</title>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <div id="phone">
+
+    <!-- ============ HOME SCREEN ============ -->
+    <section class="screen active" id="screen-home">
+      <header class="home-header">
+        <div class="location-row" onclick="toast('Demo app — location is fixed')">
+          <div class="location-text">
+            <span class="location-label">Deliver to</span>
+            <span class="location-value">Home · 123 Sukhumvit Rd <svg class="chev" viewBox="0 0 24 24"><path d="M7 10l5 5 5-5"/></svg></span>
+          </div>
+          <button class="icon-btn" onclick="event.stopPropagation();toast('No real notifications here')">
+            <svg viewBox="0 0 24 24"><path d="M12 22a2.2 2.2 0 0 0 2.2-2.2H9.8A2.2 2.2 0 0 0 12 22zm6.4-6.4V11c0-3.1-1.7-5.7-4.6-6.4V4a1.8 1.8 0 1 0-3.6 0v.6C7.3 5.3 5.6 7.9 5.6 11v4.6L4 17.2v.8h16v-.8l-1.6-1.6z"/></svg>
+            <span class="badge-dot"></span>
+          </button>
+        </div>
+        <div class="search-pill" onclick="openSearch()">
+          <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7" fill="none" stroke="currentColor" stroke-width="2"/><path d="M20 20l-3.5-3.5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+          <span>Search for food or restaurants</span>
+        </div>
+      </header>
+
+      <div class="home-body">
+        <!-- service tiles -->
+        <div class="services">
+          <button class="service" onclick="scrollToRestaurants()">
+            <div class="service-icon food"><svg viewBox="0 0 24 24"><path d="M11 9H9V2H7v7H5V2H3v7c0 2.12 1.66 3.84 3.75 3.97V22h2.5v-9.03C11.34 12.84 13 11.12 13 9V2h-2v7zm5-3v8h2.5v8H21V2c-2.76 0-5 2.24-5 4z"/></svg></div><span>Food</span>
+          </button>
+          <button class="service" onclick="toast('Mart is not available in this demo')">
+            <div class="service-icon mart"><svg viewBox="0 0 24 24"><path d="M7 18c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.08-.14.12-.31.12-.49 0-.55-.45-1-1-1H5.21l-.94-2H1zm16 16c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/></svg></div><span>Mart</span>
+          </button>
+          <button class="service" onclick="toast('Express is not available in this demo')">
+            <div class="service-icon express"><svg viewBox="0 0 24 24"><path d="M21 8l-2-5H5L3 8v13a1 1 0 0 0 1 1h16a1 1 0 0 0 1-1V8zM5.7 5h12.6l1.2 3H4.5l1.2-3zM12 17l-5-5h3V9h4v3h3l-5 5z"/></svg></div><span>Express</span>
+          </button>
+          <button class="service" onclick="toast('Rides are not available in this demo')">
+            <div class="service-icon ride"><svg viewBox="0 0 24 24"><path d="M18.92 6.01C18.72 5.42 18.16 5 17.5 5h-11c-.66 0-1.21.42-1.42 1.01L3 12v8c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-1h12v1c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-8l-2.08-5.99zM6.5 16c-.83 0-1.5-.67-1.5-1.5S5.67 13 6.5 13s1.5.67 1.5 1.5S7.33 16 6.5 16zm11 0c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zM5 11l1.5-4.5h11L19 11H5z"/></svg></div><span>Car</span>
+          </button>
+        </div>
+
+        <!-- promo carousel -->
+        <div class="promo-scroll" id="promo-scroll"></div>
+        <div class="promo-dots" id="promo-dots"></div>
+
+        <!-- cuisine categories -->
+        <h2 class="section-title">What's on your mind?</h2>
+        <div class="cuisine-scroll" id="cuisine-scroll"></div>
+
+        <!-- restaurant list -->
+        <h2 class="section-title" id="restaurants-anchor">Restaurants near you</h2>
+        <div class="filter-chips" id="filter-chips">
+          <button class="chip active" data-filter="all">All</button>
+          <button class="chip" data-filter="promo">Promo</button>
+          <button class="chip" data-filter="rating">Rating 4.5+</button>
+          <button class="chip" data-filter="fast">Under 25 min</button>
+        </div>
+        <div class="restaurant-list" id="restaurant-list"></div>
+        <div class="end-note">— That's all for this demo 🍽 —</div>
+      </div>
+    </section>
+
+    <!-- ============ SEARCH SCREEN ============ -->
+    <section class="screen" id="screen-search">
+      <header class="subheader">
+        <button class="icon-btn" onclick="goBack()"><svg viewBox="0 0 24 24"><path d="M15 19l-7-7 7-7" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+        <div class="search-pill in-header">
+          <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7" fill="none" stroke="currentColor" stroke-width="2"/><path d="M20 20l-3.5-3.5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+          <input id="search-input" type="text" placeholder="Search for food or restaurants" oninput="runSearch(this.value)">
+        </div>
+      </header>
+      <div class="screen-body" id="search-results"></div>
+    </section>
+
+    <!-- ============ RESTAURANT SCREEN ============ -->
+    <section class="screen" id="screen-restaurant">
+      <div class="screen-body no-pad" id="restaurant-detail"></div>
+      <div class="cart-bar hidden" id="cart-bar" onclick="openBasket()">
+        <span class="cart-count" id="cart-bar-count">1</span>
+        <span class="cart-bar-label">View basket</span>
+        <span class="cart-bar-total" id="cart-bar-total">฿0</span>
+      </div>
+    </section>
+
+    <!-- ============ BASKET SCREEN ============ -->
+    <section class="screen" id="screen-basket">
+      <header class="subheader">
+        <button class="icon-btn" onclick="goBack()"><svg viewBox="0 0 24 24"><path d="M15 19l-7-7 7-7" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+        <h1 id="basket-title">Basket</h1>
+      </header>
+      <div class="screen-body" id="basket-body"></div>
+      <div class="bottom-cta" id="basket-cta">
+        <button class="btn-primary" onclick="openCheckout()">Review payment and address</button>
+      </div>
+    </section>
+
+    <!-- ============ CHECKOUT SCREEN ============ -->
+    <section class="screen" id="screen-checkout">
+      <header class="subheader">
+        <button class="icon-btn" onclick="goBack()"><svg viewBox="0 0 24 24"><path d="M15 19l-7-7 7-7" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+        <h1>Checkout</h1>
+      </header>
+      <div class="screen-body" id="checkout-body"></div>
+      <div class="bottom-cta">
+        <button class="btn-primary" id="place-order-btn" onclick="placeOrder()">Place order · <span id="checkout-total">฿0</span></button>
+        <p class="fake-note">Demo only — no real order, payment or delivery will happen.</p>
+      </div>
+    </section>
+
+    <!-- ============ TRACKING SCREEN ============ -->
+    <section class="screen" id="screen-tracking">
+      <div class="screen-body no-pad" id="tracking-body"></div>
+    </section>
+
+    <!-- ============ ORDERS (ACTIVITY) SCREEN ============ -->
+    <section class="screen" id="screen-orders">
+      <header class="subheader solo"><h1>Activity</h1></header>
+      <div class="screen-body" id="orders-body"></div>
+    </section>
+
+    <!-- ============ ACCOUNT SCREEN ============ -->
+    <section class="screen" id="screen-account">
+      <header class="subheader solo"><h1>Account</h1></header>
+      <div class="screen-body" id="account-body"></div>
+    </section>
+
+    <!-- ============ BOTTOM NAV ============ -->
+    <nav class="bottom-nav" id="bottom-nav">
+      <button class="nav-item active" data-tab="home" onclick="switchTab('home')">
+        <svg viewBox="0 0 24 24"><path d="M4 10.5L12 4l8 6.5V20a1 1 0 0 1-1 1h-5v-6h-4v6H5a1 1 0 0 1-1-1z"/></svg>
+        <span>Home</span>
+      </button>
+      <button class="nav-item" data-tab="orders" onclick="switchTab('orders')">
+        <svg viewBox="0 0 24 24"><path d="M6 2h12a1 1 0 0 1 1 1v18l-3-2-3 2-3-2-3 2V3a1 1 0 0 1 1-1zm2 5h8v2H8zm0 4h8v2H8z"/></svg>
+        <span>Activity</span>
+        <span class="nav-badge hidden" id="orders-nav-badge"></span>
+      </button>
+      <button class="nav-item" data-tab="account" onclick="switchTab('account')">
+        <svg viewBox="0 0 24 24"><path d="M12 12a4.5 4.5 0 1 0-4.5-4.5A4.5 4.5 0 0 0 12 12zm0 2c-4 0-8 2-8 5v2h16v-2c0-3-4-5-8-5z"/></svg>
+        <span>Account</span>
+      </button>
+    </nav>
+
+    <!-- ============ ITEM MODAL ============ -->
+    <div class="modal-overlay hidden" id="item-modal-overlay" onclick="closeItemModal(event)">
+      <div class="modal-sheet" id="item-modal"></div>
+    </div>
+
+    <!-- toast -->
+    <div class="toast hidden" id="toast"></div>
+  </div>
+
+  <script src="js/data.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
